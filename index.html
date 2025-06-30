@@ -38,8 +38,6 @@
     <script>
         // Function to fetch directory contents (simulated for static site)
         async function loadDirectory(path = '.') {
-            // For a static site, we'll assume a predefined structure or fetch from a server
-            // In a real server setup, you could use an API endpoint to list directories
             const directories = [
                 {
                     name: 'Q4FY25',
@@ -50,7 +48,7 @@
             if (path === '.') {
                 displayDirectories(directories);
             } else if (path === 'Q4FY25') {
-                displaySubDirectories(directories.find(d => d.name === 'Q4FY25').subdirs);
+                displaySubDirectories(directories.find(d => d.name === 'Q4FY25').subdirs, path);
             }
         }
 
@@ -70,14 +68,16 @@
             });
         }
 
-        // Display subdirectories (e.g., Shivalik_Bimetal)
-        function displaySubDirectories(subdirs) {
+        // Display subdirectories with correct relative path
+        function displaySubDirectories(subdirs, parentPath) {
             const list = document.getElementById('directory-list');
             list.innerHTML = '';
             subdirs.forEach(subdir => {
                 const li = document.createElement('li');
                 const a = document.createElement('a');
-                a.href = `${subdir}/shivalik_concall_analysis.html`;
+                // Construct the relative path dynamically
+                const fullPath = `${parentPath}/${subdir}/shivalik_concall_analysis.html`;
+                a.href = fullPath;
                 a.textContent = subdir;
                 li.appendChild(a);
                 list.appendChild(li);
