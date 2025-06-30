@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #0066cc;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .folder {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Company Analysis</h1>
+    <ul id="directory-list"></ul>
+
+    <script>
+        // Function to fetch directory contents (simulated for static site)
+        async function loadDirectory(path = '.') {
+            // For a static site, we'll assume a predefined structure or fetch from a server
+            // In a real server setup, you could use an API endpoint to list directories
+            const directories = [
+                {
+                    name: 'Q4FY25',
+                    subdirs: ['Shivalik_Bimetal']
+                }
+            ];
+
+            if (path === '.') {
+                displayDirectories(directories);
+            } else if (path === 'Q4FY25') {
+                displaySubDirectories(directories.find(d => d.name === 'Q4FY25').subdirs);
+            }
+        }
+
+        // Display top-level directories
+        function displayDirectories(directories) {
+            const list = document.getElementById('directory-list');
+            list.innerHTML = '';
+            directories.forEach(dir => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = '#';
+                a.textContent = dir.name;
+                a.className = 'folder';
+                a.onclick = () => loadDirectory(dir.name);
+                li.appendChild(a);
+                list.appendChild(li);
+            });
+        }
+
+        // Display subdirectories (e.g., Shivalik_Bimetal)
+        function displaySubDirectories(subdirs) {
+            const list = document.getElementById('directory-list');
+            list.innerHTML = '';
+            subdirs.forEach(subdir => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = `${subdir}/shivalik_concall_analysis.html`;
+                a.textContent = subdir;
+                li.appendChild(a);
+                list.appendChild(li);
+            });
+        }
+
+        // Load the root directory on page load
+        window.onload = () => loadDirectory('.');
+    </script>
+</body>
+</html>
